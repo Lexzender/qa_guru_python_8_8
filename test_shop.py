@@ -11,6 +11,10 @@ from models import Product, Cart
 def product():
     return Product("book", 100, "This is a book", 1000)
 
+@pytest.fixture
+def other_product():
+    return Product("IPhone", 1000, "This is a phone", 10)
+
 @pytest.fixture()
 def cart():
     return Cart()
@@ -76,9 +80,11 @@ class TestCart:
         cart.clear()
         assert product not in cart.products.keys()
 
-    def test_total_price(self, product,cart):
+    def test_total_price(self, product,cart,other_product):
         cart.add_product(product, 5)
         assert cart.get_total_price() == product.price * 5
+        cart.add_product(other_product)
+        assert cart.get_total_price() == (product.price * 5) + other_product.price
 
     def test_buy(self,product,cart):
         with pytest.raises(ValueError):
