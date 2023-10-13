@@ -13,7 +13,6 @@ class Product:
         self.description = description
         self.quantity = quantity
 
-
     def check_quantity(self, quantity) -> bool:
         """
         TODO Верните True если количество продукта больше или равно запрашиваемому
@@ -56,12 +55,10 @@ class Cart:
         Если продукт уже есть в корзине, то увеличиваем количество
         """
 
-
         if product in self.products:
             self.products[product] = self.products[product] + buy_count
         else:
             self.products.setdefault(product, buy_count)
-
 
     def remove_product(self, product: Product, remove_count=None):
         """
@@ -69,13 +66,12 @@ class Cart:
         Если remove_count не передан, то удаляется вся позиция
         Если remove_count больше, чем количество продуктов в позиции, то удаляется вся позиция
         """
-        if remove_count == None:
+        if remove_count is None:
             del self.products[product]
         elif remove_count > self.products[product]:
             del self.products[product]
         else:
             self.products[product] = self.products[product] - remove_count
-
 
     def clear(self):
         self.products.clear()
@@ -96,7 +92,6 @@ class Cart:
             raise ValueError('Корзина пуста')
 
         for product, quantity in self.products.items():
-            print(self.products.items())
             product.buy(quantity)
 
         self.clear()
